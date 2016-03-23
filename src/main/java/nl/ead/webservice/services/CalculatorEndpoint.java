@@ -31,6 +31,10 @@ public class CalculatorEndpoint {
         CalculateResponse resp = new CalculateResponse();
         resp.setResult("" + req.getInput());
         System.out.println(memberDao.getMember(new Long(1)).getName());
+        List<Member> members = memberDao.getOtherMembers(new Long(1));
+        for(Member member : members){
+            System.out.println(member.getName());
+        }
         return resp;
     }
 }
