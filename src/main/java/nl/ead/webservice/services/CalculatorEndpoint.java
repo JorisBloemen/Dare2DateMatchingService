@@ -1,9 +1,9 @@
 package nl.ead.webservice.services;
 
-import nl.ead.webservice.CalculateOperation;
 import nl.ead.webservice.CalculateRequest;
 import nl.ead.webservice.CalculateResponse;
-import nl.ead.webservice.CalculateResult;
+import nl.ead.webservice.ComparedMember;
+import nl.ead.webservice.ResultList;
 import nl.ead.webservice.dao.ICalculationDao;
 import nl.ead.webservice.dao.IMemberDao;
 import nl.ead.webservice.model.Calculation;
@@ -14,6 +14,7 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Endpoint
@@ -28,13 +29,17 @@ public class CalculatorEndpoint {
     @PayloadRoot(localPart = "CalculateRequest", namespace = "http://www.han.nl/schemas/messages")
     @ResponsePayload
     public CalculateResponse calculateSumForName(@RequestPayload CalculateRequest req) {
+        ComparedMember cm = new ComparedMember();
+        cm.setId(new Long(10));
+        cm.setSpotifyMatchCount(14);
+        cm.setYoutubeMatchCount(85);
+
+        ResultList rl = new ResultList();
+        rl.getComparedMember().add(cm);
+        rl.getComparedMember().add(cm);
+
         CalculateResponse resp = new CalculateResponse();
-        resp.setResult("" + req.getInput());
-        System.out.println(memberDao.getMember(new Long(1)).getName());
-        List<Member> members = memberDao.getOtherMembers(new Long(1));
-        for(Member member : members){
-            System.out.println(member.getName());
-        }
+        resp.setResultList(rl);
         return resp;
     }
 }

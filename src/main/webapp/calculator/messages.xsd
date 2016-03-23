@@ -10,7 +10,7 @@
     <element name="CalculateRequest">
         <complexType>
             <sequence>
-                <element name="input" type="string" minOccurs="1"
+                <element name="id" type="string" minOccurs="1"
                          maxOccurs="1"/>
             </sequence>
         </complexType>
@@ -19,7 +19,7 @@
     <element name="CalculateResponse">
         <complexType>
             <sequence>
-                <element name="result" type="string"
+                <element name="resultList" type="types:ResultList"
                          minOccurs="1" maxOccurs="1"/>
             </sequence>
         </complexType>

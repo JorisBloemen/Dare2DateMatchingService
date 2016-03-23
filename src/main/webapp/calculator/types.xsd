@@ -4,35 +4,31 @@
         xmlns:tns="http://www.han.nl/schemas/types"
         elementFormDefault="qualified">
 
-    <complexType name="CalculateResult">
-        <all>
-            <element name="value" type="int"/>
-            <element name="message" type="string"/>
-        </all>
-    </complexType>
-
-    <complexType name="CalculateInput">
-        <all>
-            <element name="paramlist" type="tns:CalculateParameters"
-                     minOccurs="1" maxOccurs="1"/>
-            <element name="operation" type="tns:CalculateOperation"
-                     minOccurs="1" maxOccurs="1"/>
-        </all>
-    </complexType>
-
-    <complexType name="CalculateParameters">
+    <complexType name="ResultList">
         <sequence>
-            <element name="param" type="int" minOccurs="1"
-                     maxOccurs="unbounded"/>
+            <element
+                name="ComparedMember"
+                type="tns:ComparedMember"
+                minOccurs="0"
+                maxOccurs="unbounded"
+            />
         </sequence>
     </complexType>
 
-    <simpleType name="CalculateOperation">
-        <restriction base="NCName">
-            <enumeration value="add"/>
-            <enumeration value="subtract"/>
-            <enumeration value="multiply"/>
-            <enumeration value="divide"/>
-        </restriction>
-    </simpleType>
+    <complexType name="ComparedMember">
+        <all>
+            <element name="id"
+                     type="long"
+                     minOccurs="1"
+                     maxOccurs="1"/>
+            <element name="spotifyMatchCount"
+                     type="int"
+                     minOccurs="1"
+                     maxOccurs="1"/>
+            <element name="youtubeMatchCount"
+                     type="int"
+                     minOccurs="1"
+                     maxOccurs="1"/>
+        </all>
+    </complexType>
 </schema>
