@@ -16,18 +16,19 @@ import java.util.HashMap;
 
 @Endpoint
 public class CalculatorEndpoint {
-    private MatchingService matchingService;
 
     @Autowired
+    private MatchingService matchingService;
+
     public CalculatorEndpoint() {
     }
 
     @PayloadRoot(localPart = "CalculateRequest", namespace = "http://www.han.nl/schemas/messages")
     @ResponsePayload
     public CalculateResponse calculateSumForName(@RequestPayload CalculateRequest req) {
-        this.matchingService = new MatchingService(req.getId());
+        this.matchingService = new MatchingService();
         ResultList rl = new ResultList();
-        HashMap<Long, Number> spotifyMatchCount = this.matchingService.spotifyMatches();
+        HashMap<Long, Number> spotifyMatchCount = this.matchingService.spotifyMatches(req.getId());
         for(Long id :spotifyMatchCount.keySet()){
             ComparedMember cm = new ComparedMember();
             cm.setId(id);
