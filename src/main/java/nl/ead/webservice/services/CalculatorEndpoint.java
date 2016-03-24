@@ -1,43 +1,39 @@
 package nl.ead.webservice.services;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import nl.ead.webservice.CalculateRequest;
 import nl.ead.webservice.CalculateResponse;
 import nl.ead.webservice.ComparedMember;
 import nl.ead.webservice.ResultList;
-import nl.ead.webservice.dao.ICalculationDao;
 import nl.ead.webservice.dao.IMemberDao;
-import nl.ead.webservice.model.Calculation;
-import nl.ead.webservice.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 @Endpoint
 public class CalculatorEndpoint {
-    private final IMemberDao memberDao;
+    private MatchingService matchingService;
 
-    @Autowired
-    public CalculatorEndpoint(IMemberDao memberDao) {
-        this.memberDao = memberDao;
+    public CalculatorEndpoint() {
     }
 
     @PayloadRoot(localPart = "CalculateRequest", namespace = "http://www.han.nl/schemas/messages")
     @ResponsePayload
     public CalculateResponse calculateSumForName(@RequestPayload CalculateRequest req) {
-        ComparedMember cm = new ComparedMember();
-        cm.setId(new Long(10));
-        cm.setSpotifyMatchCount(14);
-        cm.setYoutubeMatchCount(85);
-
+        this.matchingService = new MatchingService(req.getId());
         ResultList rl = new ResultList();
-        rl.getComparedMember().add(cm);
-        rl.getComparedMember().add(cm);
-
+        HashMap<Long, Number> spotifyMatchCount = this.matchingService.spotifyMatches();
+        for(Long id :spotifyMatchCount.keySet()){
+            ComparedMember cm = new ComparedMember();
+            cm.setId(id);
+            cm.setSpotifyMatchCount(spotifyMatchCount.get(id).intValue());
+            cm.setYoutubeMatchCount(0);
+            rl.getComparedMember().add(cm);
+        }
         CalculateResponse resp = new CalculateResponse();
         resp.setResultList(rl);
         return resp;

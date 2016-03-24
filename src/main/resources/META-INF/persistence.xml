@@ -6,7 +6,6 @@
              version="1.0">
     <persistence-unit name="calculator">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <class>nl.ead.webservice.model.Calculation</class>
         <class>nl.ead.webservice.model.Member</class>
         <properties>
             <!-- set value on "create" only on first boot, set it to update after the first boot otherwise
