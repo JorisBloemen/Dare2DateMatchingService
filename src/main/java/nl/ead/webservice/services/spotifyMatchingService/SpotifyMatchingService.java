@@ -17,10 +17,21 @@ public class SpotifyMatchingService implements IAPIMatchingService{
     public HashMap<String, Number> calculateMatches(
             String id, ArrayList<String> possibleMatches) {
         HashMap<String, Number> result = new HashMap<>();
-        result.put("32154894", 5);
-        result.put("63254122", 2);
-        result.put("78541269", 6);
-        result.put("11253652", 3);
+        ArrayList<String> basePlaylistIds =
+                this.spotifyConnector.getPlaylistsIdByUserId(id);
+        for(String possibleMatch : possibleMatches){
+            int count = 0;
+            ArrayList<String> playlists =
+                    this.spotifyConnector.getPlaylistsIdByUserId(possibleMatch);
+            for(String basePlaylistId : basePlaylistIds){
+                for(String playlistId : playlists){
+                    if(basePlaylistId.equals(playlistId)){
+                        count++;
+                    }
+                }
+            }
+            result.put(possibleMatch, count);
+        }
         return result;
     }
 }
