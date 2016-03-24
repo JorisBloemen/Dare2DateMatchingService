@@ -18,6 +18,7 @@ import java.util.HashMap;
 public class CalculatorEndpoint {
     private MatchingService matchingService;
 
+    @Autowired
     public CalculatorEndpoint() {
     }
 
