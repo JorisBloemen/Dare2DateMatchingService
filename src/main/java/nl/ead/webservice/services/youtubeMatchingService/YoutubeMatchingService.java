@@ -14,6 +14,12 @@ public class YoutubeMatchingService implements IAPIMatchingService {
     @Autowired
     private IYoutubeConnector youtubeConnector;
 
+    public YoutubeMatchingService(){}
+
+    public YoutubeMatchingService(IYoutubeConnector youtubeConnector){
+        this.youtubeConnector = youtubeConnector;
+    }
+
     @Override
     public HashMap<String, Number> calculateMatches(
             String id, ArrayList<String> possibleMatches) {

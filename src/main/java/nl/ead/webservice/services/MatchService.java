@@ -4,6 +4,7 @@ import nl.ead.webservice.ComparedMember;
 import nl.ead.webservice.ResultList;
 import nl.ead.webservice.dao.IMemberDao;
 import nl.ead.webservice.model.Member;
+import nl.ead.webservice.services.youtubeMatchingService.IYoutubeConnector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +26,6 @@ public class MatchService implements IMatchService{
 
     @Override
     public ResultList getMatches(Long id) {
-        ResultList resultList = new ResultList();
-
         Member member = this.memberDoa.getMember(id);
         List<Member> otherMembers = this.memberDoa.getOtherMembers(id);
 
@@ -45,6 +44,14 @@ public class MatchService implements IMatchService{
                 this.youtubeMatchingService.calculateMatches(
                         member.getYoutubeId(), possibleYoutubeMatches);
 
+
+        return createResultList(otherMembers, spotifyMatchResults, youtubeMatchResults);
+    }
+
+    private ResultList createResultList(List<Member> otherMembers,
+                                        HashMap<String, Number> spotifyMatchResults,
+                                        HashMap<String, Number> youtubeMatchResults){
+        ResultList resultList = new ResultList();
         for(int i = 0; i < otherMembers.size(); i++){
             ComparedMember cm = new ComparedMember();
             cm.setId(otherMembers.get(i).getId());

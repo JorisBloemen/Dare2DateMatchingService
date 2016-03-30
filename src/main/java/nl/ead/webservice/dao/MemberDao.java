@@ -27,31 +27,4 @@ public class MemberDao implements IMemberDao{
                 .setParameter("id", id)
                 .getResultList();
     }
-
-//    @Override
-//    public List<Member> getOtherMembers(long id) {
-//        EntityManager em = emf.createEntityManager();
-//        CriteriaBuilder cb = em.getCriteriaBuilder();
-//        CriteriaQuery<Member> cQuery = cb.createQuery(Member.class);
-//        Root<Member> m = cQuery.from(Member.class);
-//        cQuery.select(m);
-//        cQuery.where(cb.notEqual(m.get("id"), id));
-//        TypedQuery<Member> tQuery = em.createQuery(cQuery);
-//        List<Member> resultList = tQuery.getResultList();
-//        return resultList;
-//    }
 }
-
-//*/
-//@Repository
-//public class CalculationDao implements ICalculationDao {
-//
-//    @PersistenceContext
-//    private EntityManager em;
-//
-//    @Transactional
-//    @Override
-//    public void save(Calculation calculation) {
-//        em.persist(calculation);
-//    }
-//}
