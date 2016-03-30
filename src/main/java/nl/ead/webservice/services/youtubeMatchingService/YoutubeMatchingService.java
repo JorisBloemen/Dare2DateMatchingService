@@ -19,11 +19,11 @@ public class YoutubeMatchingService implements IAPIMatchingService {
             String id, ArrayList<String> possibleMatches) {
         HashMap<String, Number> result = new HashMap<>();
         ArrayList<String> baseFavoritesIds =
-                this.youtubeConnector.getFavoritesIdsByUserId(id);
+                this.youtubeConnector.getFavoritesTitlesByUserId(id);
         for(String possibleMatch : possibleMatches){
             int count = 0;
             ArrayList<String> favorites =
-                    this.youtubeConnector.getFavoritesIdsByUserId(
+                    this.youtubeConnector.getFavoritesTitlesByUserId(
                             possibleMatch);
             for(String baseFavoriteId : baseFavoritesIds){
                 for(String favoriteId : favorites){

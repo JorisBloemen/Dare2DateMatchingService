@@ -31,7 +31,7 @@ public class YoutubeConnector implements IYoutubeConnector {
     .build();
 
     @Override
-    public ArrayList<String> getFavoritesIdsByUserId(String userId) {
+    public ArrayList<String> getFavoritesTitlesByUserId(String userId) {
         ArrayList<String> result = new ArrayList<>();
         String favoritesId = getPlaylistId(userId, "Favorites");
         System.out.println(favoritesId);
@@ -61,8 +61,8 @@ public class YoutubeConnector implements IYoutubeConnector {
 
             if (playlistItemList != null) {
                 for(PlaylistItem playlistItem : playlistItemList){
-                    System.out.println(playlistItem.getId());
-                    result.add(playlistItem.getId());
+                    System.out.println(playlistItem.getSnippet().getTitle());
+                    result.add(playlistItem.getSnippet().getTitle());
                 }
             } else {
                 System.out.println("There were no results for your request.");
